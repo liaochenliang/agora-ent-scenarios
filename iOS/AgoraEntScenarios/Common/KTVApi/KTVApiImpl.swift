@@ -825,6 +825,7 @@ extension KTVApiImpl {
         agoraPrint("startSing->openMedia(\(url) fail: \(ret ?? -1)")
     }
 
+    
     /**
      * 停止播放歌曲
      */
