@@ -746,27 +746,27 @@ receiveStreamMessageFromUid:(NSUInteger)uid
         NSInteger audioEffectPreset = [dict[@"preset"] integerValue];
         switch (audioEffectPreset) {
             case AgoraAudioEffectPresetOff:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetOffHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetOff];
                 NSLog(@"effect:Off");
                 break;
             case AgoraAudioEffectPresetRoomAcousticsKTV:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousticsKTVHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousticsKTV];
                 NSLog(@"effect:KTV");
                 break;
             case AgoraAudioEffectPresetRoomAcousVocalConcer:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousVocalConcerHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousVocalConcer];
                 NSLog(@"effect:Concer");
                 break;
             case AgoraAudioEffectPresetRoomAcousStudio:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousStudioHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousStudio];
                 NSLog(@"effect:Studio");
                 break;
             case AgoraAudioEffectPresetRoomAcousPhonograph:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousPhonographHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetRoomAcousPhonograph];
                 NSLog(@"effect:graph");
                 break;
             default:
-                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetOffHarmony];
+                [self.RTCkit setAudioEffectPreset:AgoraAudioEffectPresetOff];
                 NSLog(@"effect:Off");
                 break;
         }
@@ -1282,7 +1282,9 @@ receiveStreamMessageFromUid:(NSUInteger)uid
                           channelId:self.roomModel.roomNo
                                 uid:[VLUserCenter.user.id integerValue]
                        mediaOptions:[self channelMediaOptions]
-                        joinSuccess:nil];
+                        joinSuccess:^(NSString * _Nonnull channel, NSUInteger uid, NSInteger elapsed) {
+        KTVLogInfo(@"Agora - 加入RTC成功");
+    }];
     if (ret != 0) {
         KTVLogError(@"joinChannelByToken fail: %d, uid: %ld, token: %@", ret, [VLUserCenter.user.id integerValue], VLUserCenter.user.agoraRTCToken);
     }
@@ -2430,7 +2432,7 @@ receiveStreamMessageFromUid:(NSUInteger)uid
 }
 
 #pragma mark KTVApiEventHandlerDelegate
-- (void)onMusicPlayerStateChangedWithState:(AgoraMediaPlayerState)state error:(AgoraMediaPlayerError)error isLocal:(BOOL)isLocal {
+- (void)onMusicPlayerStateChangedWithState:(AgoraMediaPlayerState)state error:(AgoraMediaPlayerReason)error isLocal:(BOOL)isLocal {
     dispatch_async(dispatch_get_main_queue(), ^{
         if(state == AgoraMediaPlayerStatePlaying) {
             //显示跳过前奏
@@ -2480,13 +2482,13 @@ receiveStreamMessageFromUid:(NSUInteger)uid
 
 - (void)onMusicLoadProgressWithSongCode:(NSInteger)songCode
                                 percent:(NSInteger)percent
-                                 status:(AgoraMusicContentCenterPreloadStatus)status
+                                 status:(AgoraMusicContentCenterPreloadState)status
                                     msg:(NSString *)msg
                                lyricUrl:(NSString *)lyricUrl {
     KTVLogInfo(@"load: %li, %li", status, percent);
     dispatch_async_on_main_queue(^{
         
-        if(status == AgoraMusicContentCenterPreloadStatusError){
+        if(status == AgoraMusicContentCenterPreloadStateError){
             [VLToast toast:KTVLocalizedString(@"ktv_load_failed_and_change")];
             if(self.loadMusicCallBack) {
                 self.loadMusicCallBack(NO, songCode);
@@ -2495,7 +2497,7 @@ receiveStreamMessageFromUid:(NSUInteger)uid
             return;
         }
         
-        if (status == AgoraMusicContentCenterPreloadStatusOK){
+        if (status == AgoraMusicContentCenterPreloadStateOK){
         }
         
         if(self.singRole == KTVSingRoleSoloSinger || self.singRole == KTVSingRoleLeadSinger){
