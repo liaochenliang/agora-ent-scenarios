@@ -19,26 +19,28 @@ PODS:
   - AgoraLyricsScore (1.1.2)
   - AgoraRtcEngine_Special_iOS (1.0)
   - AgoraRtm_iOS (2.1.7)
-  - AgoraSyncManager (2.1.6):
+  - AgoraSyncManager (2.1.7):
     - SocketRocket
   - Bugly (2.5.93)
   - CallAPI (0.3.0):
     - AgoraRtcEngine_Special_iOS
     - AgoraRtm_iOS (= 2.1.7)
   - FLAnimatedImage (1.0.17)
-  - HXPhotoPicker/Camera/Lite (4.1.3):
+  - HXPhotoPicker/Camera/Lite (4.2.3.2):
     - HXPhotoPicker/Core
-  - HXPhotoPicker/Core (4.1.3)
-  - HXPhotoPicker/Editor/Lite (4.1.3):
+  - HXPhotoPicker/Core (4.2.3.2):
+    - HXPhotoPicker/Resources
+  - HXPhotoPicker/Editor/Lite (4.2.3.2):
     - HXPhotoPicker/EditorView/Lite
-  - HXPhotoPicker/EditorView/Lite (4.1.3):
+  - HXPhotoPicker/EditorView/Lite (4.2.3.2):
     - HXPhotoPicker/Core
-  - HXPhotoPicker/Lite (4.1.3):
+  - HXPhotoPicker/Lite (4.2.3.2):
     - HXPhotoPicker/Camera/Lite
     - HXPhotoPicker/Editor/Lite
     - HXPhotoPicker/Picker/Lite
-  - HXPhotoPicker/Picker/Lite (4.1.3):
+  - HXPhotoPicker/Picker/Lite (4.2.3.2):
     - HXPhotoPicker/Core
+  - HXPhotoPicker/Resources (4.2.3.2)
   - JXCategoryView (1.6.1)
   - KakaJSON (1.1.2)
   - LEEAlert (1.6.4)
@@ -49,7 +51,7 @@ PODS:
     - LSTTimer
   - LSTTimer (0.2.10)
   - Masonry (1.1.0)
-  - MJRefresh (3.7.6)
+  - MJRefresh (3.7.9)
   - Protobuf (3.22.1)
   - Pure1v1 (0.1.0):
     - AgoraSyncManager
@@ -81,7 +83,7 @@ PODS:
     - VideoLoaderAPI
     - YYCategories
     - YYModel
-  - SnapKit (5.6.0)
+  - SnapKit (5.7.1)
   - SocketRocket (0.7.0)
   - SSZipArchive (2.4.3)
   - SVGAPlayer (2.5.7):
@@ -137,7 +139,7 @@ DEPENDENCIES:
   - ZSwiftBaseLib (= 0.1.6.2)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AFNetworking
     - Agora-Scene-Utils
     - Agora_Chat_iOS
@@ -188,25 +190,25 @@ SPEC CHECKSUMS:
   AgoraLyricsScore: 0c3e6b701dfe036ba26ba208fc65c3b65ecaeb06
   AgoraRtcEngine_Special_iOS: 320a47010a3ca4564c51a8b9ebd47a3368803017
   AgoraRtm_iOS: cd26cf8a377a79934864d37e184866dbd1430eaf
-  AgoraSyncManager: b483f264a363fc7cad7b747b22e39d96f21cbe64
+  AgoraSyncManager: b54d58e45d4f2bbc0e5951cb9877c7bdb690b227
   Bugly: b8715e6ec4004b7f7fbffab0643ba80545aee3da
   CallAPI: eefee9fec496ca51cd1432e17551d0c43d75cd17
   FLAnimatedImage: bbf914596368867157cc71b38a8ec834b3eeb32b
-  HXPhotoPicker: 2368393b187ce01fb0c8bb2ad8b02436fae913ab
+  HXPhotoPicker: 7ab106262ed00dc324827675a3da275d12eb3251
   JXCategoryView: 7b1ee69ede4843c581688afe84d0f047723262f2
   KakaJSON: cc5ff50a8c1cfbb09413db8496cb709a209e6137
   LEEAlert: a604ad481e3e9b021421a271f78594926dd034bb
   LSTPopView: 9379f00f6ce7d1fc620b50ab00ed3ef97b2d4d52
   LSTTimer: caf8f02ff366ca175cf4c1778d26c166183c1b6f
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MJRefresh: 2fe7fb43a5167ceda20bb7e63f130c04fd1814a5
+  MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
   Protobuf: d7f7c8329edf5eb8af65547a8ba3e9c1cee927d5
   Pure1v1: a29e30be7dfe87afdda85cfd5b8845e719c29d3f
   ScoreEffectUI: bf1195b4d41a73d43c236450b5d7f958989844aa
   SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SDWebImageAPNGCoder: 3e4c684c8223eef2f45a50bdd0beaab345e4eb24
   ShowTo1v1: 4da6561d6f12576ce61d05add891595d18bc08d0
-  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
@@ -218,6 +220,6 @@ SPEC CHECKSUMS:
   Zip: b3fef584b147b6e582b2256a9815c897d60ddc67
   ZSwiftBaseLib: f98409d55e9b590d90acf8aa8a2fa2099da69785
 
-PODFILE CHECKSUM: 25f8363257564ce120ed1b8ccd2371bdcaf9e100
+PODFILE CHECKSUM: 5ed7fe984251cdddeb5bd50c3201ff5ee6818cc5
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

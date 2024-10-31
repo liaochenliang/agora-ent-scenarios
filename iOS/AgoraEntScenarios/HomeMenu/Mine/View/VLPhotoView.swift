@@ -203,7 +203,7 @@ extension VLPhotoView: UICollectionViewDelegate,
             pageIndex: indexPath.item,
             config: config,
             transitionalImage: cell?.photoView.image
-        ) { index in
+        ) { index,_  in
             self.collectionView.cellForItem(
                 at: IndexPath(
                     item: index,

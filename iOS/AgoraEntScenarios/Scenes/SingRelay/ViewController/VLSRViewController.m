@@ -512,7 +512,7 @@ typedef void (^CompletionBlock)(BOOL isSuccess, NSInteger songCode);
 - (void)popForceLeaveRoom {
     VL(weakSelf);
     [[VLKTVAlert shared]showKTVToastWithFrame:UIScreen.mainScreen.bounds image:[UIImage sceneImageWithName:@"empty"] message:SRLocalizedString(@"room_has_close") buttonTitle:SRLocalizedString(@"confirm") completion:^(bool flag, NSString * _Nullable text) {
-        for (BaseViewController *vc in weakSelf.navigationController.childViewControllers) {
+        for (UIViewController *vc in weakSelf.navigationController.childViewControllers) {
             if ([vc isKindOfClass:[VLSROnLineListVC class]]) {
 //                [weakSelf destroyMediaPlayer];
 //                [weakSelf leaveRTCChannel];
@@ -968,7 +968,7 @@ receiveStreamMessageFromUid:(NSUInteger)uid
             return;
         }
         
-        for (BaseViewController *vc in weakSelf.navigationController.childViewControllers) {
+        for (UIViewController *vc in weakSelf.navigationController.childViewControllers) {
             if ([vc isKindOfClass:[VLSROnLineListVC class]]) {
                 [weakSelf.navigationController popToViewController:vc animated:YES];
             }
