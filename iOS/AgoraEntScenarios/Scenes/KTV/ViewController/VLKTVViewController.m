@@ -66,7 +66,8 @@ IMusicLoadStateListener,
 VLVoiceShowViewDelegate,
 VLVoicePerShowViewDelegate,
 VLEarSettingViewViewDelegate,
-VLDebugViewDelegate
+VLDebugViewDelegate,
+VirtualSoundcardPresenterDelegate
 >
 
 typedef void (^CompletionBlock)(BOOL isSuccess, NSInteger songCode);
@@ -132,6 +133,8 @@ typedef void (^CompletionBlock)(BOOL isSuccess, NSInteger songCode);
 @property (nonatomic, strong) SoundCardSettingView *soundSettingView;
 @property (nonatomic, strong) LSTPopView *popSoundSettingView;
 @property (nonatomic, strong) HeadSetManager *headeSet;
+
+@property (nonatomic, strong) VirtualSoundcardPresenter *soundcardPresenter;
 @end
 
 @implementation VLKTVViewController
@@ -139,6 +142,7 @@ typedef void (^CompletionBlock)(BOOL isSuccess, NSInteger songCode);
 #pragma mark view lifecycles
 - (void)dealloc {
     NSLog(@"dealloc:%s",__FUNCTION__);
+    [_soundcardPresenter removeDelegate:self];
 }
 
 - (void)viewDidLoad {
@@ -151,6 +155,10 @@ typedef void (^CompletionBlock)(BOOL isSuccess, NSInteger songCode);
     self.effectType = 0;
     self.typeValue = 4;
     self.isDelay = true;
+    
+    _soundcardPresenter = [[VirtualSoundcardPresenter alloc] init];
+    [_soundcardPresenter addDelegate:self];
+    
     self.checkType = checkAuthTypeAll;
 
     [self subscribeServiceEvent];
@@ -1173,7 +1181,7 @@ receiveStreamMessageFromUid:(NSUInteger)uid
         [self.RTCkit setParameters: @"{\"che.audio.neteq.dump_level\": 1}"];
     }
     [self.RTCkit setParameters: @"{\"che.audio.input_sample_rate\": 48000}"];
-    
+    [_soundcardPresenter setupEngine:self.RTCkit];
     /// 开启唱歌评分功能
     int code = [self.RTCkit enableAudioVolumeIndication:50 smooth:10 reportVad:true];
     
@@ -1701,10 +1709,14 @@ receiveStreamMessageFromUid:(NSUInteger)uid
 
 -(void)showSoundCardView {
     self.soundSettingView = [[SoundCardSettingView alloc] init];
-    self.soundSettingView.soundOpen = self.soundOpen;
-    self.soundSettingView.gainValue = [self.gainValue floatValue];
-    self.soundSettingView.effectType = self.effectType;
-    self.soundSettingView.typeValue = self.typeValue;
+//    self.soundSettingView.soundOpen = self.soundOpen;
+//    self.soundSettingView.gainValue = [self.gainValue floatValue];
+//    self.soundSettingView.effectType = self.effectType;
+//    self.soundSettingView.typeValue = self.typeValue;
+    [self.soundSettingView setupWithEnable:[_soundcardPresenter getSoundCardEnable]
+                                 typeValue:[_soundcardPresenter getPresetValue]
+                                 gainValue:[_soundcardPresenter getGainValue]
+                                effectType:[_soundcardPresenter getPresetSoundEffectType]];
     kWeakSelf(self);
     self.soundSettingView.clicKBlock = ^(NSInteger index) {
         if(index == 2){
@@ -1720,62 +1732,93 @@ receiveStreamMessageFromUid:(NSUInteger)uid
         [formatter setRoundingMode:NSNumberFormatterRoundHalfUp];
         [formatter setMaximumFractionDigits:1];
         NSString *formattedString = [formatter stringFromNumber:@(gain)];
-        weakself.gainValue = formattedString;
+        [weakself.soundcardPresenter setGainValue:(NSInteger)gain];
         [weakself didUpdateGainValue:formattedString];
     };
     
     self.soundSettingView.typeBlock = ^(NSInteger index) {
-        weakself.typeValue = index;
+        [weakself.soundcardPresenter setPresetValue:index];
         [weakself didUpdateTypeValue:index];
     };
     
     self.soundSettingView.soundCardBlock = ^(BOOL flag) {
-        weakself.soundOpen = flag;
+        [weakself.soundcardPresenter setSoundCardEnable:flag];
         [weakself didUpdateSoundSetting:flag];
     };
    self.popSoundSettingView = [LSTPopView popSoundCardViewWithParentView:self.view soundCardView:self.soundSettingView];
 }
 
 -(void)showSoundEffectView {
+//    SoundCardEffectView *effectView = [[SoundCardEffectView alloc]init];
+//    effectView.effectType = self.effectType;
+//    LSTPopView* popEffectView = [LSTPopView popSoundCardViewWithParentView:self.view soundCardView:effectView];
+//    kWeakSelf(self);
+//    effectView.clickBlock = ^(NSInteger index) {
+//        [LSTPopView removePopView:popEffectView];
+//        //根据不同的音效设置不同的参数 同时更新设置界面UI
+//        if(index >= 0){
+//            weakself.effectType = index;
+//            [weakself didUpdateEffectValue:index];
+//            [LSTPopView removePopView:self.popSoundSettingView];
+//            [weakself showSoundCardView];
+//        } else if (index == -2){
+////            [weakself.soundSettingView setSoundOpen:false];
+////            [LSTPopView removePopView:self.popSoundSettingView];
+////            [weakself showSoundCardView];
+//        }
+//    };
     SoundCardEffectView *effectView = [[SoundCardEffectView alloc]init];
-    effectView.effectType = self.effectType;
+    effectView.effectType = [_soundcardPresenter getPresetSoundEffectType];
     LSTPopView* popEffectView = [LSTPopView popSoundCardViewWithParentView:self.view soundCardView:effectView];
     kWeakSelf(self);
     effectView.clickBlock = ^(NSInteger index) {
-        [LSTPopView removePopView:popEffectView];
-        //根据不同的音效设置不同的参数 同时更新设置界面UI
-        if(index >= 0){
-            weakself.effectType = index;
-            [weakself didUpdateEffectValue:index];
-            [LSTPopView removePopView:self.popSoundSettingView];
-            [weakself showSoundCardView];
-        } else if (index == -2){
-//            [weakself.soundSettingView setSoundOpen:false];
-//            [LSTPopView removePopView:self.popSoundSettingView];
-//            [weakself showSoundCardView];
+        if (index != -1) {
+            [weakself.soundcardPresenter setPresetSoundEffectType:index];
         }
+        [LSTPopView removePopView:popEffectView];
+        [LSTPopView removePopView:self.popSoundSettingView];
+        [weakself showSoundCardView];
     };
 }
 
 -(void)showSoundMicTypeView {
+//    SoundCardMicTypeView *micTypeView = [[SoundCardMicTypeView alloc]init];
+//    micTypeView.micType = self.typeValue;
+//    LSTPopView* popMicView = [LSTPopView popSoundCardViewWithParentView:self.view soundCardView:micTypeView];
+//    kWeakSelf(self);
+//    micTypeView.clickBlock = ^(NSInteger index) {
+//        [LSTPopView removePopView:popMicView];
+//        //根据不同的音效设置不同的参数 同时更新设置界面UI
+//        if(index >= 0){
+//            weakself.typeValue = index;
+//            [weakself didUpdateTypeValue:index];
+//            [LSTPopView removePopView:self.popSoundSettingView];
+//            [weakself showSoundCardView];
+//        }  else if (index == -2){
+////            [weakself.soundSettingView setSoundOpen:false];
+////            [LSTPopView removePopView:self.popSoundSettingView];
+////            [weakself showSoundCardView];
+//        }
+//    };
     SoundCardMicTypeView *micTypeView = [[SoundCardMicTypeView alloc]init];
-    micTypeView.micType = self.typeValue;
+    micTypeView.micType = [_soundcardPresenter getPresetValue];
     LSTPopView* popMicView = [LSTPopView popSoundCardViewWithParentView:self.view soundCardView:micTypeView];
     kWeakSelf(self);
     micTypeView.clickBlock = ^(NSInteger index) {
         [LSTPopView removePopView:popMicView];
-        //根据不同的音效设置不同的参数 同时更新设置界面UI
-        if(index >= 0){
-            weakself.typeValue = index;
-            [weakself didUpdateTypeValue:index];
-            [LSTPopView removePopView:self.popSoundSettingView];
-            [weakself showSoundCardView];
-        }  else if (index == -2){
-//            [weakself.soundSettingView setSoundOpen:false];
-//            [LSTPopView removePopView:self.popSoundSettingView];
-//            [weakself showSoundCardView];
-        }
+        [LSTPopView removePopView:self.popSoundSettingView];
+        [weakself showSoundCardView];
     };
+}
+
+#pragma mark - VirtualSoundcardPresenterDelegate
+
+- (void)onSoundcardPresenterValueChangedWithIsEnabled:(BOOL)isEnabled presetValue:(NSInteger)presetValue gainValue:(NSInteger)gainValue presetSoundType:(NSInteger)presetSoundType {
+    [self.soundSettingView setupWithEnable:isEnabled
+                                 typeValue:presetValue
+                                 gainValue:gainValue
+                                effectType:presetSoundType];
+    [self.settingView setUseSoundCard:isEnabled];
 }
 
 - (void)settingViewEffectChoosed:(NSInteger)effectIndex {

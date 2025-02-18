@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6B922B92D64388C00C00107 /* VirtualSoundcardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B922B82D64388C00C00107 /* VirtualSoundcardPresenter.swift */; };
 		A851C5DD2AEF5F8400071F88 /* ShowDebug2TFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A851C5D82AEF5F8400071F88 /* ShowDebug2TFModel.swift */; };
 		A851C5DE2AEF5F8400071F88 /* ShowDebugAgoraKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A851C5D92AEF5F8400071F88 /* ShowDebugAgoraKitManager.swift */; };
 		A851C5DF2AEF5F8400071F88 /* ShowDebugSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A851C5DA2AEF5F8400071F88 /* ShowDebugSettingVC.swift */; };
@@ -764,6 +765,7 @@
 /* Begin PBXFileReference section */
 		210B0F77C88BC56389E68BDD /* Pods-AgoraEntScenarios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgoraEntScenarios.release.xcconfig"; path = "Target Support Files/Pods-AgoraEntScenarios/Pods-AgoraEntScenarios.release.xcconfig"; sourceTree = "<group>"; };
 		63316DE582D577BACD7A4240 /* Pods-AgoraEntScenarios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AgoraEntScenarios.debug.xcconfig"; path = "Target Support Files/Pods-AgoraEntScenarios/Pods-AgoraEntScenarios.debug.xcconfig"; sourceTree = "<group>"; };
+		A6B922B82D64388C00C00107 /* VirtualSoundcardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualSoundcardPresenter.swift; sourceTree = "<group>"; };
 		A851C5D82AEF5F8400071F88 /* ShowDebug2TFModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDebug2TFModel.swift; sourceTree = "<group>"; };
 		A851C5D92AEF5F8400071F88 /* ShowDebugAgoraKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDebugAgoraKitManager.swift; sourceTree = "<group>"; };
 		A851C5DA2AEF5F8400071F88 /* ShowDebugSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowDebugSettingVC.swift; sourceTree = "<group>"; };
@@ -3296,6 +3298,7 @@
 				DDA1994E28FFE579009D3E61 /* NetworkManager */,
 				DDA1995328FFE579009D3E61 /* VLDefine */,
 				DDA1995A28FFE579009D3E61 /* Helper */,
+				A6B922B82D64388C00C00107 /* VirtualSoundcardPresenter.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -3553,12 +3556,12 @@
 			children = (
 				E301BD002AF4CAFF0089A79C /* VLKTVSliderView.h */,
 				E301BD012AF4CAFF0089A79C /* VLKTVKindsCell.h */,
-				E301BD022AF4CAFF0089A79C /* VLKTVSettingView.m */,
 				E301BD032AF4CAFF0089A79C /* VLKTVKindsView.h */,
 				E301BD042AF4CAFF0089A79C /* VLKTVTonesView.m */,
 				E301BD052AF4CAFF0089A79C /* VLKTVItemBaseView.h */,
 				E301BD062AF4CAFF0089A79C /* VLKTVRemoteVolumeView.h */,
 				E301BD072AF4CAFF0089A79C /* VLKTVSwitcherView.m */,
+				E301BD022AF4CAFF0089A79C /* VLKTVSettingView.m */,
 				E301BD082AF4CAFF0089A79C /* VLKTVSettingView.h */,
 				E301BD092AF4CAFF0089A79C /* VLKTVKindsCell.m */,
 				E301BD0A2AF4CAFF0089A79C /* VLKTVSliderView.m */,
@@ -4795,6 +4798,7 @@
 				E301C0412AF8E8E90089A79C /* SBGDebugViewController.m in Sources */,
 				E301BD7C2AF4CAFF0089A79C /* VLKTVSettingView.m in Sources */,
 				DD9EBF8C2AD5512300B4551F /* UIViewController+Presentation.swift in Sources */,
+				A6B922B92D64388C00C00107 /* VirtualSoundcardPresenter.swift in Sources */,
 				DDA19A0B28FFE579009D3E61 /* JSONObject.swift in Sources */,
 				DD9EBFFA2AD5512400B4551F /* VMConfirmView.swift in Sources */,
 				DD619AC329E3E247008F63E4 /* SAPresentView.swift in Sources */,
