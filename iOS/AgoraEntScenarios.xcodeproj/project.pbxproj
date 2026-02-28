@@ -5547,8 +5547,6 @@
 					"-weak_framework",
 					"\"AgoraSpatialAudioExtension\"",
 					"-weak_framework",
-					"\"AgoraVideoDecoderExtension\"",
-					"-weak_framework",
 					"\"AgoraVideoEncoderExtension\"",
 					"-weak_framework",
 					"\"AgoraVideoQualityAnalyzerExtension\"",

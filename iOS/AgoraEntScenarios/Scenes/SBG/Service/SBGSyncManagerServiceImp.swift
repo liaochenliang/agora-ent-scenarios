@@ -1386,7 +1386,11 @@ extension SBGSyncManagerServiceImp {
         }
         agoraPrint("imp song add...")
         songInfo.createAt = Int64(Date().timeIntervalSince1970 * 1000)
-        let params = mapConvert(model: songInfo)
+        var params = mapConvert(model: songInfo)
+        params["songName"] = "TestSong"
+        params["singer"] = "TestSinger"
+        params["name"] = "TestUser"
+        params["imageUrl"] = ""
         SyncUtil
             .scene(id: channelName)?
             .collection(className: SYNC_MANAGER_CHOOSE_SONG_INFO)
